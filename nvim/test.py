@@ -1,4 +1,0 @@
-def truc():
-    print("hello")
-
-
