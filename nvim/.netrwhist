@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =0
+let g:netrw_dirhist_0='/home/eliott/Documents/SDL_C/src'
+let g:netrw_dirhist_9='/home/eliott/Documents/SDL_C/src/assets/World'
+let g:netrw_dirhist_8='/home/eliott/Documents/SDL_C/src'
+let g:netrw_dirhist_7='/home/eliott/Downloads/shooter01/src'
+let g:netrw_dirhist_6='/home/eliott/Documents/SDL_C/src'
+let g:netrw_dirhist_5='/home/eliott/Downloads/shooter01/src'
+let g:netrw_dirhist_4='/home/eliott/.config'
+let g:netrw_dirhist_3='/home/eliott/.config/ranger'
+let g:netrw_dirhist_2='/home/eliott/Documents/C_Tutorial'
+let g:netrw_dirhist_1='/home/eliott/Documents/C_Tutorial/.vscode'

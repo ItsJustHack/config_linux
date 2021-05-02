@@ -1,6 +1,14 @@
 let g:mapleader = "\<Space>"
-
 syntax enable                           " Enables syntax highlighing
+
+let g:presence_auto_update       = 1
+let g:presence_editing_text      = "Editing %s"
+let g:presence_workspace_text    = "Working on %s"
+let g:presence_neovim_image_text = "The One True Text Editor"
+let g:presence_main_image        = "neovim"
+let g:presence_client_id         = "793271441293967371"
+let g:presence_debounce_timeout  = 15
+
 set hidden                              " Required to keep multiple buffers open multiple buffers
 set relativenumber
 set nowrap                              " Display long lines as just one line
@@ -13,6 +21,7 @@ set iskeyword+=-                      	" treat dash separated words as a word te
 set mouse=a                             " Enable your mouse
 set splitbelow                          " Horizontal splits will automatically be below
 set splitright                          " Vertical splits will automatically be to the right
+set termguicolors
 set t_Co=256                            " Support 256 colors
 set conceallevel=0                      " So that I can see `` in markdown files
 set tabstop=2                           " Insert 2 spaces for a tab
@@ -45,35 +54,57 @@ augroup project
   autocmd!
   autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
 augroup END
+autocmd BufEnter * silent! lcd %:p:h
 
 
-nnoremap <F5> :!./main<cr>
 
-nnoremap <F4> :make!<cr>
+nnoremap <F5> :!./../bin/main<cr>
+
+nnoremap <F4> :!cd .. && make<cr>
 nnoremap <C-s> :w <cr>
 nnoremap <C-q> :wq <cr>
 nnoremap <C-a> ggVG <cr>
-nnoremap <C-h> :bprevious <cr>	
-nnoremap <C-l> :bNext <cr>	
 
+nnoremap <C-j> <C-w>j
+nnoremap <C-h> <C-w>h
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
-"set autochdir                           " Your working directory will always be the same as your working directory
-autocmd vimenter * ++nested colorscheme gruvbox
+nnoremap <C-y> :bNext <cr> 
+inoremap <silent><expr> <TAB> pumvisible() ? "\<RETURN>" : "\<TAB>" 
+vnoremap <TAB> >gv 
+vnoremap <S-TAB> <gv 
+map <C-/> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+map <C-p> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+
+if bufwinnr(1)
+  map + <C-W>+
+  map - <C-W>-
+endif
+
+" Let clangd fully control code completion
+let g:ycm_clangd_uses_ycmd_caching = 0
+" Use installed clangd, not YCM-bundled clangd which doesn't get updates.
+let g:ycm_clangd_binary_path = exepath("clangd")
+
+let g:chromatica#enable_at_startup=1
 
 call plug#begin('~/.vim/plugged')
-" Use release branch (recommend)
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'francoiscabrol/ranger.vim'
+Plug 'andweeb/presence.nvim'
+Plug 'arakashic/chromatica.nvim'
+Plug 'drewtempelmeyer/palenight.vim'
 call plug#end()
 
-
-au! BufWritePost $MYVIMRC source %      " auto source when writing to init.vm alternatively you can run :source $MYVIMRC
-
+set background=dark 
+colorscheme gruvbox
 
 " You can't stop me
 cmap w!! w !sudo tee %
 
 source $HOME/.config/nvim/themes/airline.vim
-sign define semshiError text=E> texthl=semshiErrorSign
+
+
